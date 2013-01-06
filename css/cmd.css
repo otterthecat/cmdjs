@@ -1,0 +1,14 @@
+.cmd-display {
+  width: 500px;
+  height: 300px;
+  border: 1px solid #333;
+  overflow-y: auto;
+}
+.cmd-display ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.cmd-display ul .sys-in {
+  color: blue;
+}

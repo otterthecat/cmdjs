@@ -1,0 +1,1 @@
+Manual details for 'help' command would go here.

@@ -1,0 +1,1 @@
+Manual details for 'date' command would go here.

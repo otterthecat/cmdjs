@@ -1,0 +1,1 @@
+Manual details for 'man' command would go here.

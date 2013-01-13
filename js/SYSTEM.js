@@ -9,7 +9,8 @@ var SYSTEM = (function(params) {
 	}
 
 	// system 'private' properties
-	var system_form, system_display;
+	var system_form, system_display, system_input,
+		history_list = new Array(), history_pointer = 0;
 
 	// function to create required UI elements and bindings
 	var init = function(){
@@ -17,6 +18,7 @@ var SYSTEM = (function(params) {
 		create_display();
 		create_input();
 		system_form.addEventListener('submit', bind_form_events ,false);
+
 	};
 
 	var create_display = function(){
@@ -42,6 +44,9 @@ var SYSTEM = (function(params) {
 		input_field.type = "text";
 		input_field.name = "cmd-input";
 
+		system_input = input_field;
+		input_field.addEventListener('keydown', enter_history, false);
+
 		var input_btn = document.createElement('button');
 		input_btn.innerHTML ="Enter";
 
@@ -59,8 +64,33 @@ var SYSTEM = (function(params) {
 		var input_value = system_form.getElementsByTagName('input')[0].value;
 		system.exec(input_value.match(/[a-z0-9\-.?]+/g));
 
-		system.updateHistory(input_value);
+		update_history(input_value);
 		system_form.reset();
+	};
+
+	var update_history = function(item){
+
+		if(typeof item === 'string'){
+		
+			history_list.push(item);
+
+			history_pointer = (history_list.length - 1);
+		}
+	};
+
+	var enter_history = function(evt){ // 38 = up arrow 40 = down arrow
+
+
+
+		if(evt.keyCode === 38){
+
+			system_input.value = history_list[history_pointer];
+			history_pointer = history_pointer <= 0 ? 0 : history_pointer - 1;
+		} else if (evt.keyCode === 40) {
+
+			system_input.value = history_list[history_pointer];
+			history_pointer = history_pointer >= (history_list.length -1) ? history_list.length - 1 : history_pointer + 1;
+		}
 	};
 
 	// utility function
@@ -88,6 +118,10 @@ var SYSTEM = (function(params) {
 		new_list_item.className = "sys-out";
 		new_list_item.textContent = "$~ : " +str;
 		target_list.appendChild(new_list_item);
+
+		// advance display window as needed to show
+		// most recent input & response
+		display.scrollTop = display.scrollHeight;
 	};
 
 	// utility function
@@ -105,18 +139,17 @@ var SYSTEM = (function(params) {
 
 	var system = {
 
-		history: new Array(),
-
 		commands: new Array(),
-
-		updateHistory: function(item){
-
-			this.history.push(item);
-		},
 
 		getHistory: function(index){
 
-			return this.history[index];
+			if(index === undefined){
+			
+				return history_list;
+			} else {
+
+				return history_list[index];
+			}	
 		},
 
 		ajax: function(path, callback){

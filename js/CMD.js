@@ -48,6 +48,10 @@ var CMD = (function(opt){
 		new_list_item.textContent = str;
 
 		target_list.appendChild(new_list_item);
+
+		// advance display window as needed to show
+		// most recent input & response
+		display.scrollTop = display.scrollHeight;
 	};
 
 	// apply user configs

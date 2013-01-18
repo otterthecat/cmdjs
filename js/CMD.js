@@ -3,6 +3,7 @@ var CMD = (function(opt){
 	// dev configurable settings
 	var settings = {
 		name: 'default',
+		description: "No description available",
 		isBound: false,
 		version: '0.0',
 		method: function(){}
@@ -20,7 +21,7 @@ var CMD = (function(opt){
 		return orig;
 	};
 
-	var getVersion = function(){
+	var get_version = function(){
 
 		do_update("Module: " + this.name);
 		do_update("Version: " + this.version_num);
@@ -57,16 +58,22 @@ var CMD = (function(opt){
 	// apply user configs
 	settings = merge(settings, opt);
 
-	return {
+	var _cmd = function(configs){
 
-		name: settings.name,
-		version_num: settings.version,
-		description: settings.description || "No description available",
-		isBound: settings.isBound,
+		this.name = settings.name;
+		this.version_num = settings.version;
+		this.description = settings.description;
+		this.isBound = settings.isBound;
+	};
+
+
+	_cmd.prototype = {
 		method: settings.method,
-		version: getVersion,
+		version: get_version,
 		error: do_error,
 		update: do_update,
 		help: do_help
-	}
+	};
+
+	return new _cmd(settings);
 });

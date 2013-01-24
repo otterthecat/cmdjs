@@ -6,24 +6,15 @@ new_system.set(new CMD({
 	name: 'man',
 	version: '0.1',
 	description: 'get instructions for chosen module',
-	isBound: true,
+	isSysBound: true,
 	method: function(opt, man){
 
-		var system = this;
-		var c = system.commands;
-		for(var i = 0; i < c.length; i += 1){
+		var man_path = 'man/' + man.name + '.txt';
 
-			if(c[i].name === opt[0]){
+		this.ajax(man_path, function(txt){
 
-				var man_path = 'man/' + c[i].name + '.txt';
-
-				system.ajax(man_path, function(txt){
-
-					man.update(txt);
-				});
-				break;
-			}
-		}
+			man.update(txt);
+		});	
 	}
 }));
 
@@ -31,14 +22,14 @@ new_system.set(new CMD({
 	name: 'help',
 	version: '0.1',
 	description: 'get system info',
-	method: function(opt){
+	isSysBound: true,
+	method: function(opt, help){
 
-		var sc = new_system.commands;
-		this.update("Available Commands:");
-		for(var i = 0; i < sc.length; i+=1){
+		help.update("Available Commands:");
+		for(item in this.commands){
 
-			this.update(sc[i].name);
-		}
+			help.update(item);
+		};
 	}
 }));
 

@@ -18,7 +18,6 @@ var SYSTEM = (function(params) {
 		create_display();
 		create_input();
 		system_form.addEventListener('submit', bind_form_events ,false);
-
 	};
 
 	var create_display = function(){
@@ -139,7 +138,12 @@ var SYSTEM = (function(params) {
 
 	var system = {
 
-		commands: new Array(),
+		commands: {},
+
+		getCommand: function(namespace){
+
+			return typeof this.commands[namespace] === 'object' ? this.commands[namespace] : false;
+		},
 
 		getHistory: function(index){
 
@@ -154,8 +158,7 @@ var SYSTEM = (function(params) {
 
 		ajax: function(path, callback){
 
-			// not giving a **** about lesser IE versions for now
-			// ... maybe ever...
+			// TODO make this far more usable/robust rather than base functionality
 			var ajx = new XMLHttpRequest();
 
 			ajx.open('POST', path, true);
@@ -177,42 +180,42 @@ var SYSTEM = (function(params) {
 
 		set: function(obj) {
 
-			push_to_array(obj, this.commands);
+			//push_to_array(obj, this.commands);
+			this.commands[obj.name] = obj;
 			return this;
 		},
 
 		exec: function(opt_array) {
 
-			var sc = this.commands;
-
 			set_output(opt_array.join(" "));
 
-			for(var i = 0; i < sc.length; i += 1) {
+			if(typeof this.commands[opt_array[0]] === 'object'){
 
-				if(sc[i].name === opt_array[0]) {
+				var c = this.commands[opt_array[0]];
 
-					opt_array.shift();
-					switch(opt_array[0]){
+				opt_array.shift();
 
-						case "-v":
+				switch(opt_array[0]){
 
-							sc[i].version();
-							break;
+					case "-v":
 
-						case "-h":
+						c.version();
+						break;
 
-							sc[i].help();
-							break;
+					case "-h":
 
-						default: 
+						c.help();
+						break;
 
-							sc[i].isBound ? sc[i].method.call(system, opt_array, sc[i]) : sc[i].method(opt_array);
-							break;
-					}
+					default: 
 
-					return;
+						c.isSysBound ? c.method.call(system, opt_array, c)
+									 : c.method(opt_array);
+						break;
 				}
-			}
+
+				return
+			};
 
 			set_output("Command not found. try typing 'help' for list of commands");
 		}

@@ -4,7 +4,7 @@ var CMD = (function(opt){
 	var settings = {
 		name: 'default',
 		description: "No description available",
-		isBound: false,
+		isSysBound: false,
 		version: '0.0',
 		method: function(){}
 	};
@@ -63,7 +63,7 @@ var CMD = (function(opt){
 		this.name = settings.name;
 		this.version_num = settings.version;
 		this.description = settings.description;
-		this.isBound = settings.isBound;
+		this.isSysBound = settings.isSysBound;
 	};
 
 

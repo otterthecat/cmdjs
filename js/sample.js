@@ -9,7 +9,12 @@ new_system.set(new CMD({
 	isSysBound: true,
 	method: function(opt, man){
 
-		var man_path = 'man/' + man.name + '.txt';
+		if(!opt[0]){
+
+			return man.update("'man' requires argument of module name e.g 'man date'");
+		}
+
+		var man_path = 'man/' + opt[0] + '.txt';
 
 		this.ajax(man_path, function(txt){
 

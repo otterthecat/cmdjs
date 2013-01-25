@@ -1,7 +1,41 @@
+body,
+input {
+  background-color: #646464;
+  font-family: Monaco, mono;
+  font-size: 12px;
+}
+h1,
+#cmd {
+  text-align: center;
+}
+input,
 .cmd-display {
-  width: 500px;
+  padding: 5px 10px;
+  background-color: #4a4a4a;
+}
+input {
+  color: #e3e3e3;
+  border: 1px solid #a4a4a4;
+  width: 100%;
+  margin: 5px 0 0;
+}
+input,
+.cmd-display {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+#cmd {
+  width: 600px;
+  margin: 0 auto;
+}
+.cmd-display {
   height: 300px;
-  border: 1px solid #333;
+  border: 1px solid #a4a4a4;
+  background-color: #4a4a4a;
+  margin: 0 auto;
+  text-align: left;
   overflow-y: auto;
 }
 .cmd-display ul {
@@ -10,5 +44,11 @@
   list-style-type: none;
 }
 .cmd-display ul .sys-in {
-  color: blue;
+  color: #aff2fa;
+}
+.cmd-display ul .sys-out {
+  color: #cacaca;
+}
+.cmd-display li {
+  padding: 2px;
 }

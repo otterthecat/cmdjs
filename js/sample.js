@@ -11,7 +11,14 @@ new_system.set(new CMD({
 
 		if(!opt[0]){
 
-			return man.update("'man' requires argument of module name e.g 'man date'");
+			man.update("'man' requires argument of module name e.g 'man date'");
+			return;
+		} else if(!this.getCommand(opt[0])){
+
+			man.update("'man' requries argument to the name of an existing module");
+			man.update("try typing 'help' for list of available modules");
+
+			return;
 		}
 
 		var man_path = 'man/' + opt[0] + '.txt';

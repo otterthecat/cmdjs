@@ -1,16 +1,68 @@
+@primary_color: rgb(100, 100, 100);
+@cmd_response_color: rgb(175, 242,250);
+
+body, input{
+	background-color: @primary_color;
+	font-family: Monaco, mono;
+	font-size: 12px;
+}
+
+h1, #cmd{
+	text-align: center;
+}
+
+input, .cmd-display{
+	padding: 5px 10px;
+	background-color: darken(@primary_color, 10%);
+}
+
+input{
+	color: lighten(@primary_color, 50%);
+	border: 1px solid lighten(@primary_color, 25%);
+	width: 100%;
+	margin: 5px 0 0;
+}
+
+input, .cmd-display{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 16px;
+}
+
+#cmd{
+	width: 600px;
+	margin: 0 auto;
+}
+
 .cmd-display{
-	width: 500px;
+
 	height: 300px;
-	border: 1px solid #333;
+	border: 1px solid lighten(@primary_color, 25%);
+	background-color: darken(@primary_color, 10%);
+	margin: 0 auto;
+	text-align: left;
 	overflow-y: auto;
 }
 
-.cmd-display ul{
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
 
-.cmd-display ul .sys-in{
-	color: blue;
+.cmd-display {
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+
+		.sys-in{
+			color: @cmd_response_color;
+		}
+
+		.sys-out{
+			color: lighten(@primary_color, 40%);
+		}
+	}
+
+	li{
+		padding: 2px;
+	}
 }

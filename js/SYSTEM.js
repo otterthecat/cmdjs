@@ -42,15 +42,17 @@ var SYSTEM = (function(params) {
 		var input_field = document.createElement('input');
 		input_field.type = "text";
 		input_field.name = "cmd-input";
+		input_field.autocomplete = "off";
+		input_field.placeholder = "enter a command..."
 
 		system_input = input_field;
 		input_field.addEventListener('keydown', enter_history, false);
-
-		var input_btn = document.createElement('button');
-		input_btn.innerHTML ="Enter";
+		input_field.addEventListener('focus', function(){
+				
+				input_field.removeAttribute('placeholder')
+			}, false);
 
 		input_form.appendChild(input_field);
-		input_form.appendChild(input_btn);
 
 		system_form = input_form
 		document.getElementById(defaults.target).appendChild(input_form);
@@ -78,8 +80,6 @@ var SYSTEM = (function(params) {
 	};
 
 	var enter_history = function(evt){ // 38 = up arrow 40 = down arrow
-
-
 
 		if(evt.keyCode === 38){
 
